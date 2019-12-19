@@ -34,6 +34,12 @@ $ npm -v
 nodejs、npmはインストールされている状態を前提としている。
 本リポジトリをクローンしたあと、sample_react_booklistに移動して、以下を実行する。
 
+* パッケージのインストール
+
+```bash
+$ npm install
+```
+
 * アプリケーションのビルド
 
 ```bash
