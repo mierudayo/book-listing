@@ -134,6 +134,8 @@ $ npm run start
         - https://expressjs.com/en/api.html#res.sendStatus
     * Body-ParserがExpressにexpress.json()として標準搭載されている話
         - https://qiita.com/atlansien/items/c587a0bf2f7f9022107c
+    * Using Create-React-App with Express
+        - https://dev.to/loujaybee/using-create-react-app-with-express
 * その他
     * Tutorial: how to deploy a production React app to Heroku
         - https://medium.com/jeremy-gottfrieds-tech-blog/tutorial-how-to-deploy-a-production-react-app-to-heroku-c4831dfcfa08
