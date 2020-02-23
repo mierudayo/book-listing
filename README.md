@@ -13,6 +13,8 @@ Reactの基本的な使用方法を学習し、簡単なアプリケーション
 * react 16.12.0
 * express 4.17.1
 * jquery 3.4.1
+* sqlite3 4.1.1
+* sequelize 5.21.5
 
 # 作業環境
 
@@ -38,12 +40,22 @@ nodejs、npmはインストールされている状態を前提としている�
 
 ```bash
 $ npm install
+$ npm install -g sequelize-cli
 ```
 
 * アプリケーションのビルド
 
 ```bash
 $ npm run build
+```
+
+* DB(sqlite)の準備
+
+マイグレーション、およびデータのインポート
+
+```
+$ sequelize db:migrate --env development
+$ sequelize db:seed:all
 ```
 
 * アプリケーションの実行
@@ -82,6 +94,20 @@ $ npm run start
     - 書籍API(routes/books.js)の設定
   - routes/books.js
     - REST API(書籍の一覧、登録、更新、削除)を定義
+  - controllers/book.controller.js
+    - DB 操作
+* DB 関連
+  - models/book.js
+    - モデル book のモジュール
+    - sequelize-cliで生成
+      - ```sequelize model:create --name book --underscored --attributes title:string,author:string```
+  - migrations/20200223023505-create-books.js
+    - マイグレーション用データ
+    - sequelize-cliでモデル作成時に生成
+  - seeders/seeders/20200223045812-demo-book.js
+    - 初期データ
+    - sequelize-cliでテンプレート作成
+      - ```sequelize seed:generate --name demo-book```
 
 # 画面構成
 
@@ -102,6 +128,11 @@ $ npm run start
 * 書籍の削除
     - REST APIの用意含む
 
+# 作業履歴
+
+* データベースを使用する。(20200223)
+  - DB に Sqlite3 、 ORM にSequelizeを使用
+
 # 今後の課題
 
 本アプリをより実践的なものにするために、以下のような課題を挙げる。
@@ -111,7 +142,6 @@ $ npm run start
 * 書籍一覧画面でページネーションを実現する。
 * 書籍情報から、著者情報を分離する。
 * 書籍の画像を登録できるようにする。
-* データベースを使用する。
 * その他。
 
 # 参考
@@ -136,6 +166,20 @@ $ npm run start
         - https://qiita.com/atlansien/items/c587a0bf2f7f9022107c
     * Using Create-React-App with Express
         - https://dev.to/loujaybee/using-create-react-app-with-express
+* Sequelize
+    * Node.JSのSequelize ORM入門
+        - https://qiita.com/markusveeyola/items/64875c9507d5fa32884e
+    * Getting started
+        - https://sequelize.org/v5/manual/getting-started
+    * Node.jsのSequelizeでDBのmigrationを実行する
+        - https://qiita.com/cobot00/items/0bc0da1095e09bcd0d5f
+* SQLite
+    * SQLite
+      - https://www.sqlite.org/index.html
+    * SQL As Understood By SQLite CREATE TABLE
+      - https://www.sqlite.org/lang_createtable.html
+        - rowid(または、oid、_rowid_)というカラムが自動的に付加される
+        - "WITHOUT ROWID"をつけないテーブルは rowid table と呼ばれる
 * その他
     * Tutorial: how to deploy a production React app to Heroku
         - https://medium.com/jeremy-gottfrieds-tech-blog/tutorial-how-to-deploy-a-production-react-app-to-heroku-c4831dfcfa08
