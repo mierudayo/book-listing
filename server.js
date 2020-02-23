@@ -41,7 +41,12 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  //res.render('error');
+  // https://stackoverflow.com/questions/23595282/error-no-default-engine-was-specified-and-no-extension-was-provided
+  res.json({
+    message: err.message,
+    error: err
+  });
 });
 
 
