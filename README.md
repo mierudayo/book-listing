@@ -94,6 +94,7 @@ $ npm run start
     - 書籍API(routes/books.js)の設定
   - routes/books.js
     - REST API(書籍の一覧、登録、更新、削除)を定義
+    - DB操作(controllers/book.controller.js) を呼び出す
   - controllers/book.controller.js
     - DB 操作
 * DB 関連
