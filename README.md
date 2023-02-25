@@ -10,11 +10,11 @@ Reactの基本的な使用方法を学習し、簡単なアプリケーション
 
 # 主な使用ライブラリ
 
-* react 16.12.0
-* express 4.17.1
-* jquery 3.4.1
-* sqlite3 4.1.1
-* sequelize 5.21.5
+* react 18.2.0
+* express 4.18.2
+* jquery 3.6.3
+* sqlite3 5.1.4
+* sequelize 6.29.0
 
 # 作業環境
 
@@ -22,13 +22,13 @@ Reactの基本的な使用方法を学習し、簡単なアプリケーション
 
 ```
 $ uname -a
-Linux hiroki-VirtualBox 4.15.0-72-generic #81-Ubuntu SMP Tue Nov 26 12:20:02 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+MINGW64_NT-10.0-22621 DESKTOP-87BENED 3.3.3-341.x86_64 2022-01-17 11:45 UTC x86_64 Msys
 
 $ node -v
-v10.17.0
+v18.14.2
 
 $ npm -v
-6.13.4
+9.5.1
 ```
 
 # 実行方法
