@@ -35,7 +35,7 @@ module.exports = {
         console.log('update 1');
         Book.update({
             title: req.body.title,
-            author: req.params.author
+            author: req.body.author
         }, {
             where: {id: req.params.id}
         })
