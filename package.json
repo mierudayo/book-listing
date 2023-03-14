@@ -8,13 +8,13 @@
     "@testing-library/user-event": "^14.4.3",
     "express": "^4.18.2",
     "express-favicon": "^2.0.4",
-    "jquery": "^3.6.3",
+    "jquery": "^3.6.4",
     "path": "^0.12.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "sequelize": "^6.29.0",
-    "sqlite3": "^5.1.4"
+    "sequelize": "^6.29.3",
+    "sqlite3": "^5.1.6"
   },
   "scripts": {
     "nodestart": "node server.js",

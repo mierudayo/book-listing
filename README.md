@@ -12,9 +12,9 @@ Reactの基本的な使用方法を学習し、簡単なアプリケーション
 
 * react 18.2.0
 * express 4.18.2
-* jquery 3.6.3
-* sqlite3 5.1.4
-* sequelize 6.29.0
+* jquery 3.6.4
+* sqlite3 5.1.6
+* sequelize 6.29.3
 
 # 作業環境
 
