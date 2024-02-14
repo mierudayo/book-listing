@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -21,15 +22,24 @@ namespace BookListClient
     {
         private List<Book> _dataList;
 
+        private const string BaseUrl = "http://localhost:8080/books";
+
         public BookListClient()
         {
             InitializeComponent();
         }
 
-        //
-        // 初期表示
-        //
+        /// <summary>
+        /// 初期表示 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void BookListClient_Load(object sender, EventArgs e)
+        {
+            await LoadData();
+        }
+
+        private async Task LoadData()
         {
             try
             {
@@ -37,9 +47,9 @@ namespace BookListClient
                 //{
                 //    new Book(){id = 1, author = "藤子F不二雄", title = "ドラえもん"}
                 //};
-                _dataList = await GetBooksAsync("http://localhost:8080/books");
-
-                LoadDataIntoDataGridView(_dataList);
+                _dataList = await GetBooksAsync(BaseUrl);
+                dataGridView1.DataSource = _dataList;
+                // LoadDataIntoDataGridView(_dataList);
             }
             catch (Exception ex)
             {
@@ -49,33 +59,6 @@ namespace BookListClient
                     MessageBoxIcon.Error);
             }
         }
-
-        //
-        // データをグリッドにロードする
-        //
-        private void LoadDataIntoDataGridView(List<Book> dataList)
-        {
-
-            dataGridView1.DataSource = dataList;
-
-            dataGridView1.Columns.Add(new DataGridViewButtonColumn()
-            {
-                Name = "Edit",
-                Text = "編集",
-                Width = 50,
-                UseColumnTextForButtonValue = true
-            });
-
-            dataGridView1.Columns.Add(new DataGridViewButtonColumn()
-            {
-                Name = "Delete",
-                Text = "削除",
-                Width = 50,
-                UseColumnTextForButtonValue = true
-            });
-
-        }
-
 
         // 参考
         // https://learn.microsoft.com/ja-jp/aspnet/web-api/overview/advanced/calling-a-web-api-from-a-net-client
@@ -88,6 +71,28 @@ namespace BookListClient
                 $"{Book.author}\tTitle: {Book.title}");
         }
 
+        /// <summary>
+        /// グリッドのセルがクリックされた場合の処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView gridView = (DataGridView)sender;
+            var buttonName = gridView.Columns[e.ColumnIndex].Name;
+            var book = (Book)gridView.Rows[e.RowIndex].DataBoundItem;
+            Console.WriteLine($"book: {book}");
+            if (buttonName == "Edit")
+            {
+                // 編集ボタン
+            } else if (buttonName == "Delete")
+            {
+                // 削除ボタン
+                var statusCode = await DeleteBookAsync(book.id);
+                await LoadData();
+            }
+        }
+ 
         //static async Task<Uri> CreateBookAsync(Book Book)
         //{
         //    HttpResponseMessage response = await client.PostAsync(
@@ -98,7 +103,11 @@ namespace BookListClient
         //    return response.Headers.Location;
         //}
 
-
+        /// <summary>
+        /// 本の一覧を取得する
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         static async Task<List<Book>> GetBooksAsync(string path)
         {
             List<Book> books = null;
@@ -131,7 +140,7 @@ namespace BookListClient
             }
             return Book;
         }
-
+ 
         //static async Task<Book> UpdateBookAsync(Book Book)
         //{
         //    HttpResponseMessage response = await client.PutAsJsonAsync(
@@ -143,12 +152,12 @@ namespace BookListClient
         //    return Book;
         //}
 
-        //static async Task<HttpStatusCode> DeleteBookAsync(string id)
-        //{
-        //    HttpResponseMessage response = await client.DeleteAsync(
-        //        $"api/Books/{id}");
-        //    return response.StatusCode;
-        //}
+        static async Task<HttpStatusCode> DeleteBookAsync(int id)
+        {
+            HttpResponseMessage response = await client.DeleteAsync(
+                $"{BaseUrl}/{id}");
+            return response.StatusCode;
+        }
 
     }
 }
