@@ -85,6 +85,9 @@ namespace BookListClient
             if (buttonName == "Edit")
             {
                 // 編集ボタン
+                EditBookForm editForm = new EditBookForm();
+                editForm.Show();
+
             } else if (buttonName == "Delete")
             {
                 // 削除ボタン
