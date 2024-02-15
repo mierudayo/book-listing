@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -86,7 +81,8 @@ namespace BookListClient
             {
                 // 編集ボタン
                 EditBookForm editForm = new EditBookForm();
-                editForm.Show();
+                editForm.initForEdit(book, this);
+                editForm.ShowDialog();
 
             } else if (buttonName == "Delete")
             {
@@ -128,32 +124,36 @@ namespace BookListClient
         }
 
 
-        static async Task<Book> GetBookAsync(string path)
-        {
-            Book Book = null;
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                string s = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"response: {s}");
-
-                var doc = JsonSerializer.Deserialize<List<Book>>(s);
-
-                //Book = await response.Content.ReadAsAsync<Book>();
-            }
-            return Book;
-        }
- 
-        //static async Task<Book> UpdateBookAsync(Book Book)
+        //static async Task<Book> GetBookAsync(string path)
         //{
-        //    HttpResponseMessage response = await client.PutAsJsonAsync(
-        //        $"api/Books/{Book.Id}", Book);
-        //    response.EnsureSuccessStatusCode();
+        //    Book Book = null;
+        //    HttpResponseMessage response = await client.GetAsync(path);
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string s = await response.Content.ReadAsStringAsync();
+        //        Console.WriteLine($"response: {s}");
 
-        //    // Deserialize the updated Book from the response body.
-        //    Book = await response.Content.ReadAsAsync<Book>();
+        //        var doc = JsonSerializer.Deserialize<List<Book>>(s);
+
+        //        //Book = await response.Content.ReadAsAsync<Book>();
+        //    }
         //    return Book;
         //}
+
+        internal async Task<Book> UpdateBookAsync(Book book)
+        {
+            //JsonContent content = new JsonContent(book);
+            //string url = $"{BaseUrl}/{book.id}";
+            //HttpResponseMessage response = await client.PutAsync(
+            //    url, null);
+            //response.EnsureSuccessStatusCode();
+
+            //// Deserialize the updated Book from the response body.
+            //Book updated = await response.Content.ReadAsAsync<Book>();
+            //return updated;
+
+            return book;
+        }
 
         static async Task<HttpStatusCode> DeleteBookAsync(int id)
         {

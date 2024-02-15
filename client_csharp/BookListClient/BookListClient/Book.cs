@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookListClient
 {
-    class Book
+    public class Book
     {
         public int id { get; set; }
         public string author { get; set; }
