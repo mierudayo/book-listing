@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,7 +35,7 @@ namespace BookListClient
             await LoadData();
         }
 
-        private async Task LoadData()
+        internal async Task LoadData()
         {
             try
             {
@@ -140,20 +141,25 @@ namespace BookListClient
         //    return Book;
         //}
 
-        internal async Task<Book> UpdateBookAsync(Book book)
+        /// <summary>
+        /// 本を更新する
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
+        internal async Task<HttpResponseMessage> UpdateBookAsync(Book book)
         {
-            //JsonContent content = new JsonContent(book);
-            //string url = $"{BaseUrl}/{book.id}";
-            //HttpResponseMessage response = await client.PutAsync(
-            //    url, null);
-            //response.EnsureSuccessStatusCode();
-
-            //// Deserialize the updated Book from the response body.
-            //Book updated = await response.Content.ReadAsAsync<Book>();
-            //return updated;
-
-            return book;
+            JsonContent content = JsonContent.Create<Book>(book);
+            string url = $"{BaseUrl}/{book.id}";
+            HttpResponseMessage response = await client.PutAsync(
+                url, content);
+            return response;
         }
+
+        /// <summary>
+        /// 本を削除する
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
 
         static async Task<HttpStatusCode> DeleteBookAsync(int id)
         {

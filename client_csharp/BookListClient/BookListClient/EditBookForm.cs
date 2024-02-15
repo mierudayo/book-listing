@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -69,8 +70,23 @@ namespace BookListClient
                     title = this.textBox3.Text
                 };
 
-                await parent.UpdateBookAsync(toUpdate);
-
+                HttpResponseMessage response = await parent.UpdateBookAsync(toUpdate);
+                if (response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("更新しました",
+                       "更新しました",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Information);
+                    await parent.LoadData();
+                    this.Dispose();
+                }
+                else
+                {
+                    MessageBox.Show("更新に失敗しました",
+                       "更新に失敗しました",
+                       MessageBoxButtons.OK,
+                       MessageBoxIcon.Error);
+                }
             }
         }
     }
