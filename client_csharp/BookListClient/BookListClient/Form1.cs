@@ -35,13 +35,17 @@ namespace BookListClient
             await LoadData();
         }
 
+        /// <summary>
+        /// データをロードする
+        /// </summary>
+        /// <returns></returns>
         internal async Task LoadData()
         {
             try
             {
                 //_dataList = new List<Book>()
                 //{
-                //    new Book(){id = 1, author = "藤子F不二雄", title = "ドラえもん"}
+                //    new Book(){id = 1, author = "著者", title = "タイトル"}
                 //};
                 _dataList = await GetBooksAsync(BaseUrl);
                 dataGridView1.DataSource = _dataList;
@@ -105,8 +109,6 @@ namespace BookListClient
             editForm.ShowDialog();
         }
 
-
-
         /// <summary>
         /// 本の一覧を取得する
         /// </summary>
@@ -127,23 +129,6 @@ namespace BookListClient
             }
             return books;
         }
-
-
-        //static async Task<Book> GetBookAsync(string path)
-        //{
-        //    Book Book = null;
-        //    HttpResponseMessage response = await client.GetAsync(path);
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        string s = await response.Content.ReadAsStringAsync();
-        //        Console.WriteLine($"response: {s}");
-
-        //        var doc = JsonSerializer.Deserialize<List<Book>>(s);
-
-        //        //Book = await response.Content.ReadAsAsync<Book>();
-        //    }
-        //    return Book;
-        //}
 
         /// <summary>
         /// 本を登録する
@@ -178,14 +163,11 @@ namespace BookListClient
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-
         static async Task<HttpStatusCode> DeleteBookAsync(int id)
         {
             HttpResponseMessage response = await client.DeleteAsync(
                 $"{BaseUrl}/{id}");
             return response.StatusCode;
         }
-
-
     }
 }
