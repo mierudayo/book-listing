@@ -3,6 +3,8 @@
 - 本リポジトリで用意した API ( http://localhost:8080/books/ )に接続します
 - 本の追加、編集、削除が可能です
 
+動画 https://github.com/hrk4649/sample_react_booklist/issues/12
+
 ![form](./images/form.png)
 
 実行方法
