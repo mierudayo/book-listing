@@ -92,16 +92,20 @@ namespace BookListClient
                 await LoadData();
             }
         }
- 
-        //static async Task<Uri> CreateBookAsync(Book Book)
-        //{
-        //    HttpResponseMessage response = await client.PostAsync(
-        //        "api/Books", Book);
-        //    response.EnsureSuccessStatusCode();
 
-        //    // return URI of the created resource.
-        //    return response.Headers.Location;
-        //}
+        /// <summary>
+        /// 追加ボタンが押されたときの処理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            EditBookForm editForm = new EditBookForm();
+            editForm.initForAdd(this);
+            editForm.ShowDialog();
+        }
+
+
 
         /// <summary>
         /// 本の一覧を取得する
@@ -142,6 +146,20 @@ namespace BookListClient
         //}
 
         /// <summary>
+        /// 本を登録する
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
+        internal async Task<HttpResponseMessage> CreateBookAsync(Book book)
+        {
+            JsonContent content = JsonContent.Create<Book>(book);
+            string url = $"{BaseUrl}";
+            HttpResponseMessage response = await client.PostAsync(
+                url, content);
+            return response;
+        }
+
+        /// <summary>
         /// 本を更新する
         /// </summary>
         /// <param name="book"></param>
@@ -167,6 +185,7 @@ namespace BookListClient
                 $"{BaseUrl}/{id}");
             return response.StatusCode;
         }
+
 
     }
 }
