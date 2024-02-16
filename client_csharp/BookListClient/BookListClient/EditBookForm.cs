@@ -83,7 +83,7 @@ namespace BookListClient
                     title = this.textBox3.Text
                 };
 
-                HttpResponseMessage response = await parent.UpdateBookAsync(toUpdate);
+                HttpResponseMessage response = await BookRestAPI.UpdateBookAsync(toUpdate);
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("更新しました",
@@ -109,7 +109,7 @@ namespace BookListClient
                     author = this.textBox2.Text,
                     title = this.textBox3.Text
                 };
-                HttpResponseMessage response = await parent.CreateBookAsync(toAdd);
+                HttpResponseMessage response = await BookRestAPI.CreateBookAsync(toAdd);
                 if (response.IsSuccessStatusCode)
                 {
                     MessageBox.Show("追加しました",

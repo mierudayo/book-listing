@@ -16,9 +16,10 @@ namespace BookListClient
 {
     public partial class Main : Form
     {
+        /// <summary>
+        /// 書籍リスト
+        /// </summary>
         private List<Book> _dataList;
-
-        private const string BaseUrl = "http://localhost:8080/books";
 
         public Main()
         {
@@ -43,13 +44,23 @@ namespace BookListClient
         {
             try
             {
+                // 次のようなデータがセットされる想定
                 //_dataList = new List<Book>()
                 //{
                 //    new Book(){id = 1, author = "著者", title = "タイトル"}
                 //};
-                _dataList = await GetBooksAsync(BaseUrl);
+
+                _dataList = await BookRestAPI.GetBooksAsync();
                 dataGridView1.DataSource = _dataList;
-                // LoadDataIntoDataGridView(_dataList);
+
+                // 参考
+                // https://learn.microsoft.com/ja-jp/dotnet/api/system.collections.generic.list-1.foreach?view=net-8.0
+                // 取得したリストを出力する(その1)
+                _dataList.ForEach(ShowBook);
+                // 取得したリストを出力する(その2)
+                _dataList.ForEach(delegate(Book book) {
+                    ShowBook(book);
+                });
             }
             catch (Exception ex)
             {
@@ -60,11 +71,10 @@ namespace BookListClient
             }
         }
 
-        // 参考
-        // https://learn.microsoft.com/ja-jp/aspnet/web-api/overview/advanced/calling-a-web-api-from-a-net-client
-
-        static HttpClient client = new HttpClient();
-
+        /// <summary>
+        /// 本の内容を標準出力する
+        /// </summary>
+        /// <param name="Book">本</param>
         static void ShowBook(Book Book)
         {
             Console.WriteLine($"Id: {Book.id}\tAuthor: " +
@@ -92,7 +102,7 @@ namespace BookListClient
             } else if (buttonName == "Delete")
             {
                 // 削除ボタン
-                var statusCode = await DeleteBookAsync(book.id);
+                var statusCode = await BookRestAPI.DeleteBookAsync(book.id);
                 await LoadData();
             }
         }
@@ -107,67 +117,6 @@ namespace BookListClient
             EditBookForm editForm = new EditBookForm();
             editForm.initForAdd(this);
             editForm.ShowDialog();
-        }
-
-        /// <summary>
-        /// 本の一覧を取得する
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        static async Task<List<Book>> GetBooksAsync(string path)
-        {
-            List<Book> books = null;
-            HttpResponseMessage response = await client.GetAsync(path);
-            if (response.IsSuccessStatusCode)
-            {
-                string s = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"response: {s}");
-
-                books = JsonSerializer.Deserialize<List<Book>>(s);
-
-                //Book = await response.Content.ReadAsAsync<Book>();
-            }
-            return books;
-        }
-
-        /// <summary>
-        /// 本を登録する
-        /// </summary>
-        /// <param name="book"></param>
-        /// <returns></returns>
-        internal async Task<HttpResponseMessage> CreateBookAsync(Book book)
-        {
-            JsonContent content = JsonContent.Create<Book>(book);
-            string url = $"{BaseUrl}";
-            HttpResponseMessage response = await client.PostAsync(
-                url, content);
-            return response;
-        }
-
-        /// <summary>
-        /// 本を更新する
-        /// </summary>
-        /// <param name="book"></param>
-        /// <returns></returns>
-        internal async Task<HttpResponseMessage> UpdateBookAsync(Book book)
-        {
-            JsonContent content = JsonContent.Create<Book>(book);
-            string url = $"{BaseUrl}/{book.id}";
-            HttpResponseMessage response = await client.PutAsync(
-                url, content);
-            return response;
-        }
-
-        /// <summary>
-        /// 本を削除する
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        static async Task<HttpStatusCode> DeleteBookAsync(int id)
-        {
-            HttpResponseMessage response = await client.DeleteAsync(
-                $"{BaseUrl}/{id}");
-            return response.StatusCode;
         }
     }
 }
