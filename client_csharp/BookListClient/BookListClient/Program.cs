@@ -16,7 +16,7 @@ namespace BookListClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BookListClient());
+            Application.Run(new Main());
         }
     }
 }

@@ -14,13 +14,13 @@ using System.Windows.Forms;
  */
 namespace BookListClient
 {
-    public partial class BookListClient : Form
+    public partial class Main : Form
     {
         private List<Book> _dataList;
 
         private const string BaseUrl = "http://localhost:8080/books";
 
-        public BookListClient()
+        public Main()
         {
             InitializeComponent();
         }

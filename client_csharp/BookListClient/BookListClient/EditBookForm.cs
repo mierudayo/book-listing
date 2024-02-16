@@ -23,13 +23,13 @@ namespace BookListClient
         /// </summary>
         private Book toEdit;
 
-        private BookListClient parent;
+        private Main parent;
 
         /// <summary>
         /// (編集のために)データをセットする
         /// </summary>
         /// <param name="book"></param>
-        public void initForEdit(Book book, BookListClient p)
+        public void initForEdit(Book book, Main p)
         {
             toEdit = book;
             parent = p;
@@ -47,7 +47,7 @@ namespace BookListClient
         /// 追加の場合の初期化
         /// </summary>
         /// <param name="p"></param>
-        public void initForAdd(BookListClient p)
+        public void initForAdd(Main p)
         {
             parent = p;
             this.textBox1.Text = "";

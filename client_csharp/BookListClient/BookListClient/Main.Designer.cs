@@ -1,7 +1,7 @@
 ﻿
 namespace BookListClient
 {
-    partial class BookListClient
+    partial class Main
     {
         /// <summary>
         /// 必要なデザイナー変数です。
@@ -109,7 +109,7 @@ namespace BookListClient
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.dataGridView1);
             this.Name = "BookListClient";
-            this.Text = "Form1";
+            this.Text = "書籍リスト";
             this.Load += new System.EventHandler(this.BookListClient_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
