@@ -1,6 +1,6 @@
 # Windowsフォームによるクライアント(C#)
 
-- 本リポジトリで用意した API (http://localhost:8080/books/)に接続します
+- 本リポジトリで用意した API ( http://localhost:8080/books/ )に接続します
 - 本の追加、編集、削除が可能です
 
 ![form](./images/form.png)
