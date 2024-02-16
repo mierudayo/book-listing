@@ -102,8 +102,25 @@ namespace BookListClient
             } else if (buttonName == "Delete")
             {
                 // 削除ボタン
-                var statusCode = await BookRestAPI.DeleteBookAsync(book.id);
-                await LoadData();
+
+                // 参考
+                // https://atmarkit.itmedia.co.jp/fdotnet/dotnettips/008msgbox/msgbox.html
+
+                DialogResult dr = MessageBox.Show($"{book.title}を削除しますか",
+                    "削除",
+                    MessageBoxButtons.OKCancel);
+                if (dr == DialogResult.OK)
+                {
+                    var response = await BookRestAPI.DeleteBookAsync(book.id);
+                    if (!response.IsSuccessStatusCode)
+                    { 
+                        MessageBox.Show("削除に失敗しました",
+                            "削除",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
+                    }
+                    await LoadData();
+                }
             }
         }
 
